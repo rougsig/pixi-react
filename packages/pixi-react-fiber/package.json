@@ -10,13 +10,16 @@
     "dist"
   ],
   "dependencies": {
-  },
-  "devDependencies": {
+    "pixi.js": "^8.1.0",
+    "react-reconciler": "^0.29.0"
   },
   "scripts": {
     "bootstrap": "pnpm install --filter @rougsig/pixi-react-fiber",
     "clean": "rimraf dist node_modules",
     "test": "vitest",
     "build": "tsc && vite build"
+  },
+  "devDependencies": {
+    "@types/react-reconciler": "^0.28.8"
   }
 }
