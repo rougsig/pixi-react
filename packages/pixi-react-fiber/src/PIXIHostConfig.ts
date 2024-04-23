@@ -31,6 +31,31 @@ export class PIXIHostConfigImpl implements PIXIHostConfig {
   public constructor() {
   }
 
+  // region Core Methods
+
+  getRootHostContext(rootContainer: PIXI.Container): null {
+    return null
+  }
+
+  getChildHostContext(parentHostContext: never, type: string, rootContainer: PIXI.Container): never {
+    return parentHostContext
+  }
+
+  finalizeInitialChildren(instance: PIXI.Container, type: string, props: Record<string, unknown>, rootContainer: PIXI.Container, hostContext: never): boolean {
+    return false
+  }
+
+  prepareUpdate(
+    instance: Container,
+    _type: string,
+    oldProps: Record<string, unknown>,
+    newProps: Record<string, unknown>,
+    _rootContainer: Container,
+    _hostContext: never,
+  ): DiffSet | null {
+
+  }
+
   afterActiveInstanceBlur(): void {
   }
 
@@ -90,6 +115,8 @@ export class PIXIHostConfigImpl implements PIXIHostConfig {
   shouldSetTextContent(type: string, props: Record<string, unknown>): boolean {
     return false
   }
+
+  // endregion
 
   // region Mutation Methods
 
