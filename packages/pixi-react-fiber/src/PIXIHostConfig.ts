@@ -1,8 +1,9 @@
-import {HostConfig} from 'react-reconciler'
+import * as ReactReconciler from 'react-reconciler'
 import * as PIXI from 'pixi.js'
+import {DiffSet} from '#/diff-set'
 import {Container} from 'pixi.js'
 
-export interface PIXIHostConfig extends HostConfig<
+export interface PIXIHostConfig extends ReactReconciler.HostConfig<
   string,
   Record<string, unknown>,
   PIXI.Container,
@@ -12,7 +13,7 @@ export interface PIXIHostConfig extends HostConfig<
   never,
   PIXI.Container,
   never,
-  any,
+  DiffSet,
   never,
   number | undefined,
   -1
@@ -33,7 +34,7 @@ export class PIXIHostConfigImpl implements PIXIHostConfig {
   afterActiveInstanceBlur(): void {
   }
 
-  appendInitialChild(parentInstance: Container, child: Container): void {
+  appendInitialChild(parentInstance: PIXI.Container, child: PIXI.Container): void {
   }
 
   beforeActiveInstanceBlur(): void {
@@ -42,23 +43,15 @@ export class PIXIHostConfigImpl implements PIXIHostConfig {
   cancelTimeout(id: number | undefined): void {
   }
 
-  createInstance(type: string, props: Record<string, unknown>, rootContainer: Container, hostContext: never, internalHandle: ReactReconciler.OpaqueHandle): Container {
+  createInstance(type: string, props: Record<string, unknown>, rootContainer: PIXI.Container, hostContext: never, internalHandle: ReactReconciler.OpaqueHandle): PIXI.Container {
     return undefined
   }
 
-  createTextInstance(text: string, rootContainer: Container, hostContext: never, internalHandle: ReactReconciler.OpaqueHandle): never {
+  createTextInstance(text: string, rootContainer: PIXI.Container, hostContext: never, internalHandle: ReactReconciler.OpaqueHandle): never {
     return undefined
   }
 
-  detachDeletedInstance(node: Container): void {
-  }
-
-  finalizeInitialChildren(instance: Container, type: string, props: Record<string, unknown>, rootContainer: Container, hostContext: never): boolean {
-    return false
-  }
-
-  getChildHostContext(parentHostContext: never, type: string, rootContainer: Container): never {
-    return undefined
+  detachDeletedInstance(node: PIXI.Container): void {
   }
 
   getCurrentEventPriority(): ReactReconciler.Lane {
@@ -69,33 +62,25 @@ export class PIXIHostConfigImpl implements PIXIHostConfig {
     return undefined
   }
 
-  getInstanceFromScope(scopeInstance: any): null | Container {
+  getInstanceFromScope(scopeInstance: any): null | PIXI.Container {
     return undefined
   }
 
-  getPublicInstance(instance: Container): Container {
+  getPublicInstance(instance: PIXI.Container): PIXI.Container {
     return undefined
   }
 
-  getRootHostContext(rootContainer: Container): null {
+  prepareForCommit(containerInfo: PIXI.Container): Record<string, any> | null {
     return undefined
   }
 
-  prepareForCommit(containerInfo: Container): Record<string, any> | null {
-    return undefined
-  }
-
-  preparePortalMount(containerInfo: Container): void {
+  preparePortalMount(containerInfo: PIXI.Container): void {
   }
 
   prepareScopeUpdate(scopeInstance: any, instance: any): void {
   }
 
-  prepareUpdate(instance: Container, type: string, oldProps: Record<string, unknown>, newProps: Record<string, unknown>, rootContainer: Container, hostContext: never): any {
-    return undefined
-  }
-
-  resetAfterCommit(containerInfo: Container): void {
+  resetAfterCommit(containerInfo: PIXI.Container): void {
   }
 
   scheduleTimeout(fn: (...args: unknown[]) => unknown, delay?: number): number | undefined {
@@ -106,6 +91,20 @@ export class PIXIHostConfigImpl implements PIXIHostConfig {
     return false
   }
 
+  // region Mutation Methods
 
+  appendChildToContainer(container: PIXI.Container, child: PIXI.Container) {
+    container.addChild(child)
+  }
 
+  removeChildFromContainer(container: PIXI.Container, child: PIXI.Container) {
+    container.removeChild(child)
+  }
+
+  insertInContainerBefore(container: PIXI.Container, child: PIXI.Container, beforeChild: PIXI.Container) {
+    const index = container.getChildIndex(beforeChild)
+    container.addChildAt(child, index)
+  }
+
+  // endregion
 }
