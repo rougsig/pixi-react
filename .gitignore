@@ -1,0 +1,8 @@
+.idea
+node_modules
+.nx
+dist
+.env
+.env*
+__generated__
+prod

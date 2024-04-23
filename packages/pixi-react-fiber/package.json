@@ -1,0 +1,22 @@
+{
+  "name": "@rougsig/pixi-react-fiber",
+  "private": false,
+  "version": "1.0.0",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "src",
+    "test",
+    "dist"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "bootstrap": "pnpm install --filter @rougsig/pixi-react-fiber",
+    "clean": "rimraf dist node_modules",
+    "test": "vitest",
+    "build": "tsc && vite build"
+  }
+}
