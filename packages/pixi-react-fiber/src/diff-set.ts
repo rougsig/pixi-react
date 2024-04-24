@@ -1,3 +1,5 @@
+import {Instance} from '#/PIXIHostConfig'
+
 export type DiffSet = {
   changes: DiffSetNode[]
 }
@@ -5,12 +7,12 @@ export type DiffSet = {
 export type DiffSetNode = [key: string, value: unknown]
 
 export const createDiffSet:
-  (last: Record<string, unknown>, next: Record<string, unknown>) => DiffSet =
-  (last, next) => {
+  (prev: Record<string, unknown>, next: Record<string, unknown>) => DiffSet =
+  (prev, next) => {
     const changes: DiffSetNode[] = []
 
-    for (const key in last) {
-      if (next.hasOwnProperty(key) || !last.hasOwnProperty(key) || last[key] === null) {
+    for (const key in prev) {
+      if (next.hasOwnProperty(key) || !prev.hasOwnProperty(key) || prev[key] === null) {
         continue
       }
       if (key === 'children') {
@@ -21,10 +23,10 @@ export const createDiffSet:
     }
 
     for (const key in next) {
-      const lastValue = last[key]
+      const prevValue = prev[key]
       const nextValue = next[key]
 
-      if (!next.hasOwnProperty(key) || nextValue === lastValue || (nextValue === null && lastValue === null)) {
+      if (!next.hasOwnProperty(key) || nextValue === prevValue || (nextValue === null && prevValue === null)) {
         continue
       }
       if (key === 'children') {
@@ -36,3 +38,9 @@ export const createDiffSet:
 
     return {changes}
   }
+
+export const applyDiffSet = (target: Instance, diffSet: DiffSet) => {
+  for (const [key, value] of diffSet.changes) {
+    target[key] = value
+  }
+}
