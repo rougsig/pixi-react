@@ -1,6 +1,6 @@
 import * as ReactReconciler from 'react-reconciler'
 import * as PIXI from 'pixi.js'
-import {DiffSet} from '#/diff-set'
+import {createDiffSet, DiffSet} from '#/diff-set'
 import {Container} from 'pixi.js'
 
 export interface PIXIHostConfig extends ReactReconciler.HostConfig<
@@ -46,14 +46,15 @@ export class PIXIHostConfigImpl implements PIXIHostConfig {
   }
 
   prepareUpdate(
-    instance: Container,
+    _instance: Container,
     _type: string,
-    oldProps: Record<string, unknown>,
-    newProps: Record<string, unknown>,
+    last: Record<string, unknown>,
+    next: Record<string, unknown>,
     _rootContainer: Container,
     _hostContext: never,
   ): DiffSet | null {
-
+    const diffSet = createDiffSet(last, next)
+    return diffSet.changes.length ? diffSet : null
   }
 
   afterActiveInstanceBlur(): void {
